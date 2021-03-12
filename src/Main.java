@@ -4,7 +4,6 @@
  * Description: Read in grid from text file to 2D array, then print out, and finally calculate blob inside per grid
  */
 
-
 import java.io.*;
 import java.util.*;
 
@@ -71,7 +70,7 @@ public class Main {
         for (int i = 0; i < rowCount; i++) {
             // Loop until the end of the column count of the array
             for (int j = 0; j < columnCount; j++) {
-                // Print from [0][0] then [0][1] then [0][2]... till end of the column count and back to [1][0]
+                // Print from [0][0] then [0][1] then [0][2]... till end of the column count and back to [1][0] then go
                 System.out.print(grid[i][j]);
             }
             System.out.println();
@@ -145,11 +144,11 @@ public class Main {
 
         arrived[i][j] = 1; // Mark as arrived if we don't get to the base case
 
-        // Recursively mark all the 4 adjacent cells - right, left, up and down
-        return wentThrough(i+1, j, grid, arrived, rowCount, columnCount) // Right
-                + wentThrough(i-1, j, grid, arrived, rowCount, columnCount) // Left
-                + wentThrough(i, j+1, grid, arrived, rowCount, columnCount) // Up
-                + wentThrough(i, j-1, grid, arrived, rowCount, columnCount); // Down
+        // Recursively mark all the 4 adjacent cells - Down, up, right, left
+        return wentThrough(i+1, j, grid, arrived, rowCount, columnCount) // Down
+                + wentThrough(i-1, j, grid, arrived, rowCount, columnCount) // Up
+                + wentThrough(i, j+1, grid, arrived, rowCount, columnCount) // Right
+                + wentThrough(i, j-1, grid, arrived, rowCount, columnCount); // Left
     }
 
     public static void main(String[] args) throws IOException {
@@ -159,6 +158,7 @@ public class Main {
         String fileName = inputKeyboard.nextLine();
 
         try (Scanner scanner = new Scanner(new File(fileName))) {
+            // While loop if the file has next line to read in
             while (scanner.hasNextLine()) {
                 char[][] grid = readGridData(scanner);
                 printGrid(grid);
