@@ -67,55 +67,89 @@ public class Main {
         int rowCount = grid.length;
         // Get column count of the same array
         int columnCount = grid[0].length;
+        // Loop until the end of row count of the array
         for (int i = 0; i < rowCount; i++) {
+            // Loop until the end of the column count of the array
             for (int j = 0; j < columnCount; j++) {
+                // Print from [0][0] then [0][1] then [0][2]... till end of the column count and back to [1][0]
                 System.out.print(grid[i][j]);
             }
             System.out.println();
         }
     } // End of printGrid
 
+    /**
+     * Method Name: findShapes
+     * @author Duc Anh Vu
+     * Creation Date: March 11, 2021
+     * Modified Date: March 11, 2021
+     * Description: Print out the grid from the character array type in parameter
+     * @param grid array grid (character type)
+     * @param rowCount number of row of the array
+     * @param columnCount number of column of the array
+     * @return Total number of count time after running through all the loop that check and mark the shapes
+     * Data Type: Integer
+     * Dependencies: N/A
+     * Throws/Exceptions: N/A
+     */
     public static int findShapes(char[][] grid, int rowCount, int columnCount) {
-        int[][] visited = new int[rowCount][columnCount]; // all false from beginning
+        int[][] arrived = new int[rowCount][columnCount]; // Integer array name "arrived", to mark whether we went through the spot or not
+        // Only 0 and 1 in this array, described later in wentThrough()
+        int count = 0; // Count of shapes start from 0
 
-        int count = 0;
-
-        for (int i = 0; i < rowCount; i++)
-        {
-            for (int j = 0; j < columnCount; j++)
-            {
-                if (grid[i][j] == 'X' && visited[i][j] == 0 ) // Not arrived dot
-                {
-                    wentThrough(i,j, grid, visited, rowCount, columnCount);
-                    count++;
+        // Same shit up there
+        for (int i = 0; i < rowCount; i++) {
+            // Same again
+            for (int j = 0; j < columnCount; j++) {
+                // If the spot in the grid is X, and didn't arrived then mark as wentThrough() now
+                if (grid[i][j] == 'X' && arrived[i][j] == 0 ) {
+                    wentThrough(i,j, grid, arrived, rowCount, columnCount);
+                    count++; // Increase count per time reach the condition
                 }
             }
         }
-        return count;
+        return count; // Return total count when finish loop
     }
 
-
+    /**
+     * Method Name: wentThrough
+     * @author Duc Anh Vu
+     * Creation Date: March 11, 2021
+     * Modified Date: March 11, 2021
+     * Description: Print out the grid from the character array type in parameter
+     * @param grid array grid (character type)
+     * @param i CURRENT index of the row of the array when reached condition in line 106
+     * @param j CURRENT index of the column of the array when reached condition in line 106
+     * @param arrived Integer array "arrived" use to mark 1 as arrived and 0 as dot or reach base case
+     * @param rowCount number of row of the array
+     * @param columnCount number of column of the array
+     * @return 0 and 1, 1 for arrived, 0 for dot or base case
+     * Data type: Integer
+     * Dependencies: N/A
+     * Throws/Exceptions: N/A
+     */
     public static int wentThrough(int i, int j, char[][] grid, int[][] arrived, int rowCount, int columnCount)
     {
-        if (i < 0 || j < 0)
+        if (i < 0 || j < 0) { // Base case 1: If  i and j < 0 (kinda impossible but just for sure), then return 0
             return 0;
-
-        if (i >= rowCount || j >= columnCount)
+        }
+        if (i >= rowCount || j >= columnCount) { // Base case 2: If out of index length then return 0
             return 0;
-
-        if (arrived[i][j] == 1) // already arrived
+        }
+        if (arrived[i][j] == 1) { // Base case 3: If marked arrived already then return 1
             return 1;
-
-        if (grid[i][j] == '.') // Not a dot
+        }
+        if (grid[i][j] == '.') { // Base case 4: If the position equal a dot then return 0
             return 0;
+        }
 
-        arrived[i][j] = 1;
+        arrived[i][j] = 1; // Mark as arrived if we don't get to the base case
 
-    // recursively mark all the 4 adjacent cells - right, left, up and down
-        return wentThrough(i+1, j, grid, arrived, rowCount, columnCount)
-                + wentThrough(i-1, j, grid, arrived, rowCount, columnCount)
-                + wentThrough(i, j+1, grid, arrived, rowCount, columnCount)
-                + wentThrough(i, j-1, grid, arrived, rowCount, columnCount);
+        // Recursively mark all the 4 adjacent cells - right, left, up and down
+        return wentThrough(i+1, j, grid, arrived, rowCount, columnCount) // Right
+                + wentThrough(i-1, j, grid, arrived, rowCount, columnCount) // Left
+                + wentThrough(i, j+1, grid, arrived, rowCount, columnCount) // Up
+                + wentThrough(i, j-1, grid, arrived, rowCount, columnCount); // Down
     }
 
     public static void main(String[] args) throws IOException {
