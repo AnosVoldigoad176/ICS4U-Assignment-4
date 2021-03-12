@@ -16,24 +16,36 @@ public class Main {
      * Creation Date: March 11, 2021
      * Modified Date: March 11, 2021
      * Description: Read the grid data from text file and put it in to an 2D array
-     * @param scanner Scanner to check if the file has next line or end
+     * @param scanner Scanner to check if the file has next line or end. The reason use this here so later I can use the hasNextLine() to read until the end of the file.
      * @return array grid
      * Data Type: Void
      * Dependencies: N/A
      * Throws/Exceptions: N/A
      */
     public static char[][] readGridData(Scanner scanner) {
+        
+        // Assign columnCount and rowCount to what we read from first two line per record in the text file
+        // Read the first line of a "record", which is column count of the grid later we will read
         int columnCount = Integer.parseInt(scanner.nextLine());
+        // Read the second line of the record, row count of the grid
         int rowCount = Integer.parseInt(scanner.nextLine());
+        // Print out both of them
         System.out.println(columnCount);
         System.out.println(rowCount);
+        
+        // Create a 2D array, name grid, the row and column of the array is determined by what we read up there and already assigned to 2 variables
         char[][] grid = new char[rowCount][columnCount];
+        // Loop until it reach the end of the row of the grid
         for (int i = 0; i < rowCount; i++) {
+            // Read the whole next line (after two integer number bcz we already read them), as String.
             String line = scanner.nextLine();
+            // Loop until the end of the column of the grid
             for (int j = 0; j < columnCount; j++) {
+                // Divided what we read as String up there to character.
                 grid[i][j] = line.charAt(j);
             }
         }
+        // Return when the loop is done (reached max dimension of the array)
         return grid;
     } // End readGridData
 
@@ -42,7 +54,7 @@ public class Main {
      * @author Duc Anh Vu
      * Creation Date: March 11, 2021
      * Modified Date: March 11, 2021
-     * Description: Print out the grid from the array in parameter
+     * Description: Print out the grid from the character array type in parameter
      * @param grid array grid (character type)
      * Return Value: N/A
      * Data Type: Void
@@ -50,7 +62,10 @@ public class Main {
      * Throws/Exceptions: N/A
      */
     public static void printGrid(char[][] grid) {
+        
+        // Get row count of the array in param
         int rowCount = grid.length;
+        // Get column count of the same array
         int columnCount = grid[0].length;
         for (int i = 0; i < rowCount; i++) {
             for (int j = 0; j < columnCount; j++) {
