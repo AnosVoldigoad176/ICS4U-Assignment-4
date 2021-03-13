@@ -1,7 +1,7 @@
 /*
  * Author: Duc Anh Vu
  * Last modified: March 11, 2021
- * Description: Read in grid from text file to 2D array, then print out, and finally calculate blob inside per grid
+ * Description: Read in grid from text file to 2D array, then print out, and finally count shapes
  */
 
 import java.io.*;
@@ -127,8 +127,7 @@ public class Main {
      * Dependencies: N/A
      * Throws/Exceptions: N/A
      */
-    public static int wentThrough(int i, int j, char[][] grid, int[][] arrived, int rowCount, int columnCount)
-    {
+    public static int wentThrough(int i, int j, char[][] grid, int[][] arrived, int rowCount, int columnCount) {
         if (i < 0 || j < 0) { // Base case 1: If  i and j < 0 (kinda impossible but just for sure), then return 0
             return 0;
         }
